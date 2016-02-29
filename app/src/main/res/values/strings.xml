@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">万能播放器</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_video_list">VideoListActivity</string>
+</resources>
