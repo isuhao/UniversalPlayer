@@ -20,12 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sszyc8.universalplayer.R;
-import com.sszyc8.universalplayer.SSAdapter;
+import com.sszyc8.universalplayer.adapter.SSAdapter;
 import com.sszyc8.universalplayer.bean.VideoBean;
 import com.sszyc8.universalplayer.service.OnLetterUpdateListenerService;
 import com.sszyc8.universalplayer.ui.DragLayout;
 import com.sszyc8.universalplayer.ui.QuickIndexBar;
 import com.sszyc8.universalplayer.utils.Utils;
+import com.sszyc8.universalplayer.view.MyRelativeLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ import java.util.List;
 public class VideoListActivity extends Activity {
 
     private DragLayout mDragLayout;
+    private MyRelativeLayout myRelativeLayout;
+
     private TextView tvNotVideo;
     private ListView lvVideo;
     private List<VideoBean> videoList; //  视屏数据集合
@@ -122,6 +125,8 @@ public class VideoListActivity extends Activity {
      */
     private void initVideoListView() {
         mDragLayout = (DragLayout) findViewById(R.id.dl);
+        myRelativeLayout = (MyRelativeLayout) findViewById(R.id.mll);
+
         tvNotVideo = (TextView) findViewById(R.id.tv_not_video);
         lvVideo = (ListView) findViewById(R.id.lv_video);
         mQuickIndexBar = (QuickIndexBar) findViewById(R.id.qib);
@@ -168,16 +173,19 @@ public class VideoListActivity extends Activity {
             }
         });
 
+        //  设置引用
+        myRelativeLayout.setDragLayout(mDragLayout);
         //  设置监听
         mDragLayout.setDragStatusListener(new DragLayout.OnDragStatusChangeListener() {
             @Override
             public void onOpen() {
-                Utils.showToast(VideoListActivity.this, "onOpen");
+//                Utils.showToast(VideoListActivity.this, "onOpen");
             }
 
             @Override
             public void onClose() {
-                Utils.showToast(VideoListActivity.this, "onClose");
+//                Utils.showToast(VideoListActivity.this, "onClose");
+
                 //  设置主页面头像抖动
 //                ObjectAnimator animator = ObjectAnimator.ofFloat(ivIcon, "translationX", 15.0f);
 //                animator.setInterpolator(new CycleInterpolator(4));

@@ -32,63 +32,64 @@
     </LinearLayout>
 
     <!--主面板-->
-    <RelativeLayout
+    <com.sszyc8.universalplayer.view.MyRelativeLayout
+        android:id="@+id/mll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffff">
+        android:background="#ffff"
+        android:orientation="vertical">
+            <!--标题栏目-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#18b6ef"
+                android:gravity="center_vertical">
 
-        <!--标题栏目-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#18b6ef"
-            android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="视屏列表"
+                    android:textColor="@color/quickColock"
+                    android:textSize="21dp" />
+            </RelativeLayout>
+
+            <!--主页面显示的信息列表-->
+            <ListView
+                android:id="@+id/lv_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"></ListView>
+
+            <!--快速索引栏目-->
+            <com.sszyc8.universalplayer.ui.QuickIndexBar
+                android:id="@+id/qib"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="50dp"
+                android:background="@color/quickColock" />
+            <!--提示文字信息-->
+            <TextView
+                android:id="@+id/tv_dialog_center"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/dialog_index_bg"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/quickColock"
+                android:textSize="42sp"
+                android:visibility="gone" />
 
             <TextView
+                android:id="@+id/tv_not_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="视屏列表"
-                android:textColor="@color/quickColock"
-                android:textSize="21dp" />
-        </RelativeLayout>
-
-        <!--主页面显示的信息列表-->
-        <ListView
-            android:id="@+id/lv_video"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"></ListView>
-
-        <!--快速索引栏目-->
-        <com.sszyc8.universalplayer.ui.QuickIndexBar
-            android:id="@+id/qib"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:background="@color/quickColock" />
-        <!--提示文字信息-->
-        <TextView
-            android:id="@+id/tv_dialog_center"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/dialog_index_bg"
-            android:gravity="center"
-            android:text="A"
-            android:textColor="@color/quickColock"
-            android:textSize="42sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_not_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="木有发现视屏哦..."
-            android:textColor="@color/silver"
-            android:textSize="12dp"
-            android:visibility="invisible" />
-    </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:text="木有发现视屏哦..."
+                android:textColor="@color/silver"
+                android:textSize="12dp"
+                android:visibility="invisible" />
+    </com.sszyc8.universalplayer.view.MyRelativeLayout>
 </com.sszyc8.universalplayer.ui.DragLayout>
