@@ -2,11 +2,74 @@
 <items version="2" >
 
     <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/internal_impl-23.1.1-b5b1f2f4bd5fbfb79d5ccd1c7c4bc2c70a68c15a.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/DevelopmentEnvironment/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/support-annotations-23.1.1-fa5355d199b9852689737e4bc74d501b927b6bb9.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/.gradle/caches/modules-2/files-2.1/com.belerweb/pinyin4j/2.5.0/5a620aedec0f779f2123ba60fd4b74bfbd3e2646/pinyin4j-2.5.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5a620aedec0f779f2123ba60fd4b74bfbd3e2646">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/pinyin4j-2.5.0-91473c738444f303b3b5a1916bd0942a60e66eeb.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-f89fbcd3539a3d84b35aa71f3090a2c76172620b.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-db9097582246e41962351d0aa3ba95d5ef70fdde.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-302bc8af6b829d4ea271c192eb8788de46019209.jar" />
+    </item>
+    <item
         jar="/Volumes/DataStorage/sszyc8/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/debug/library-2.4.0-5d78b895dec8338627e4a6ea7db0df97f11c6085.jar" />
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/library-2.4.0-5d78b895dec8338627e4a6ea7db0df97f11c6085.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-99849385f1999b119b64ddbb9c09800dfbab2022.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/org.xutils/xutils/3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a67fb7ceb1976352bda3b2a7a8af1db23967da94">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-c6b04ff382ac9c1c6dd7b6d375a7d2b6bfc40261.jar" />
+    </item>
+    <item
+        jar="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/exploded-aar/UniversalPlayer/vitamio/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4b6c9ac382394135d615e794d8d32c6de2633a20">
+        <dex dex="/Volumes/DataStorage/sszyc8/Workspace/AndroidStudioProjects/UniversalPlayer/app/build/intermediates/pre-dexed/release/classes-612bc020bfd47cb6cbd3784f6bf7dc120e2c4eb7.jar" />
     </item>
 
 </items>

@@ -31,10 +31,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ly_loading"
         android:layout_centerHorizontal="true"
-        android:text="玩命加载中..."
+        android:text="正在检查更新..."
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/silver"
         android:textSize="12dp" />
 
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="当前版本:1.0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/silver"
+        android:textSize="12dp" />
 
+    <!--<ProgressBar-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true" />-->
 </RelativeLayout>

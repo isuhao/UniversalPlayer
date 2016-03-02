@@ -1,8 +1,14 @@
 package com.sszyc8.universalplayer.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -78,5 +84,27 @@ public class Utils {
 
         mToast.setText(msg);
         mToast.show();
+    }
+
+    /**
+     * 将输入流读取成String后返回
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
+    public static String readFromStream(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int len = 0;
+        byte[] buffer = new byte[1024];
+
+        while ((len = in.read(buffer)) != -1) {
+            out.write(buffer, 0, len);
+        }
+
+        String result = out.toString();
+        in.close();
+        out.close();
+        return result;
     }
 }

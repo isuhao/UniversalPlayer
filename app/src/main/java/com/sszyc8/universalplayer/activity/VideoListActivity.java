@@ -272,13 +272,13 @@ public class VideoListActivity extends Activity {
         tvDialogCenter.setText(letter);
         //  清除之前的所有消息
         mHandler.removeCallbacksAndMessages(null);
-        //  设置提示框显示1秒后隐藏
+        //  设置提示框显示0.3秒后隐藏
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 tvDialogCenter.setVisibility(View.GONE);
             }
-        }, 1000);
+        }, 300);
     }
 
     /**
