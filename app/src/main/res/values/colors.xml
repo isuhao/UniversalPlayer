@@ -2,13 +2,18 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorTitle">#488FCC</color>
+
     <color name="colorAccent">#FF4081</color>
 
-    <color name="black">#000</color>
     <color name="silver">#C0C0C0</color>
     <color name="gray">#808080</color>
 
 
     <color name="quickColock">#588888</color>
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+
 
 </resources>

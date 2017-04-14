@@ -7,25 +7,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sszyc8.universalplayer.R;
 import com.sszyc8.universalplayer.utils.Utils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -41,9 +47,14 @@ import java.net.URL;
  */
 public class SplashActivity extends Activity {
 
-    private static final int CODE_ERROR = 0;  //  设置错误码
-    private static final int CODE_SHOW_UPDATE_DIALOG = 1;  //  设置显示升级对话框
-    private static final int CODE_ENTER_HOME = 2;   //  设置回到主页码
+    private static final int CODE_SHOW_UPDATE_DIALOG = 0;  //  设置显示升级对话框
+    private static final int CODE_ENTER_HOME = 1;   //  设置回到主页码
+    private static final int CODE_URL_ERROR = 2;
+    private static final int CODE_NET_ERROR = 3;
+    private static final int CODE_JSON_ERROR = 4;
+
+
+    private SharedPreferences mSp;
 
     private String mVersionName;//  版本名称
     private int mVersionCode;   //  版本号
@@ -62,9 +73,19 @@ public class SplashActivity extends Activity {
                     Utils.showToast(SplashActivity.this, "回到主页面");
                     intoMain();
                     break;
-                case CODE_ERROR:
-                    Utils.showToast(SplashActivity.this, "更新出错,回到主页面");
-                    intoMain();
+                case CODE_URL_ERROR:
+                    Utils.showToast(SplashActivity.this, "更新的URL存在异常!");
+                    checkPasswordStatus();
+                    break;
+                case CODE_NET_ERROR:
+                    Utils.showToast(SplashActivity.this, "网络异常!");
+                    checkPasswordStatus();
+                    break;
+                case CODE_JSON_ERROR:
+                    Utils.showToast(SplashActivity.this, "数据解析异常!");
+                    checkPasswordStatus();
+                    break;
+                default:
                     break;
             }
         }
@@ -73,18 +94,45 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //隐藏状态栏
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         //  初始化xutils
         x.Ext.init(this.getApplication());
 
         setContentView(R.layout.activity_splash);
 
         //  初始化布局
-        this.initView();
+        //this.initView();
         //  初始化数据
-        this.initData();
+        //this.initData();
+        test();
+    }
+
+    private void test() {
+        ImageView videoThumbnail = (ImageView) findViewById(R.id.video_thumbnail);
+
+    }
+
+    /**
+     * 获取视频的缩略图
+     * 先通过ThumbnailUtils来创建一个视频的缩略图，然后再利用ThumbnailUtils来生成指定大小的缩略图。
+     * 如果想要的缩略图的宽和高都小于MICRO_KIND，则类型要使用MICRO_KIND作为kind的值，这样会节省内存。
+     *
+     * @param videoPath 视频的路径
+     * @param width     指定输出视频缩略图的宽度
+     * @param height    指定输出视频缩略图的高度度
+     * @param kind      参照MediaStore.Images.Thumbnails类中的常量MINI_KIND和MICRO_KIND。
+     *                  其中，MINI_KIND: 512 x 384，MICRO_KIND: 96 x 96
+     * @return 指定大小的视频缩略图
+     */
+    private Bitmap getVideoThumbnail(String videoPath, int width, int height,
+                                     int kind) {
+        Bitmap bitmap = null;
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind);
+        System.out.println("w" + bitmap.getWidth());
+        System.out.println("h" + bitmap.getHeight());
+        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+        return bitmap;
     }
 
     /**
@@ -93,8 +141,8 @@ public class SplashActivity extends Activity {
     private void initView() {
 
         //  得到是启动更新状态(在设置中打开开启/关闭)
-        SharedPreferences mSp = getSharedPreferences("config", MODE_PRIVATE);
-        boolean isAutoUpdate = mSp.getBoolean("auto_update", true);
+        mSp = getSharedPreferences("config", MODE_PRIVATE);
+        boolean isAutoUpdate = mSp.getBoolean("setting_auto_update", true);
         //  判断是否要更新
         if (isAutoUpdate) {
             //调用检查版本
@@ -110,10 +158,20 @@ public class SplashActivity extends Activity {
      */
     private void initData() {
         //动态设置版本号
-        TextView tvVersion = (TextView) findViewById(R.id.tv_version);
-//        tvVersion.setText("版本名:" + getVersionName());
+        //TextView tvVersion = (TextView) findViewById(R.id.tv_version);
     }
 
+
+    private void checkPasswordStatus() {
+        boolean isClockStatus = mSp.getBoolean("setting_privacy_status", false);
+        //  判断是否开启隐私模式了
+        if (isClockStatus) {
+            startActivity(new Intent(SplashActivity.this, PassWordActivity.class));
+            finish();
+        } else {
+            intoMain();
+        }
+    }
 
     /**
      * 进入视屏列表页面(主页面)
@@ -162,12 +220,22 @@ public class SplashActivity extends Activity {
                             msg.what = CODE_ENTER_HOME;
                         }
                     }
-                } catch (Exception e) {
+                } catch (MalformedURLException e) {
+                    // url错误的异常
+                    msg.what = CODE_URL_ERROR;
                     e.printStackTrace();
-                    msg.what = CODE_ERROR;
+                } catch (IOException e) {
+                    // 网络错误异常
+                    msg.what = CODE_NET_ERROR;
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    // json解析失败
+                    msg.what = CODE_JSON_ERROR;
+                    e.printStackTrace();
                 } finally {
                     long endTime = System.currentTimeMillis();
-                    long timeUsed = endTime - startTime;// 访问网络花费的时间
+                    // 访问网络花费的时间
+                    long timeUsed = endTime - startTime;
                     if (timeUsed < 2000) {
                         // 强制休眠一段时间,保证闪屏页展示2秒钟
                         try {
@@ -178,7 +246,8 @@ public class SplashActivity extends Activity {
                     }
                     mHandler.sendMessage(msg);
                     if (conn != null) {
-                        conn.disconnect();// 关闭网络连接
+                        // 关闭网络连接
+                        conn.disconnect();
                     }
                 }
             }
@@ -192,8 +261,10 @@ public class SplashActivity extends Activity {
      */
     private void showUpdateDailog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("最新版本:" + mVersionName);// 设置标题
-        alertDialog.setMessage(mDescription);   //  设置信息
+        // 设置标题
+        alertDialog.setTitle("最新版本:" + mVersionName);
+        //  设置信息
+        alertDialog.setMessage(mDescription);
         alertDialog.setPositiveButton("立刻更新", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

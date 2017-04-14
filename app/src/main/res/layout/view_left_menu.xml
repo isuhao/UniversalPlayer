@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!--拖动主面板后看到的左侧页面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="50dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="50dp"
+    android:paddingTop="50dp">
+
+    <!--头部-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!--左侧显示的头像-->
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/head" />
+    </LinearLayout>
+
+
+    <!--中部-->
+    <RadioGroup
+        android:id="@+id/rl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:divider="@color/gray"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <RadioButton
+            android:id="@+id/rb_list"
+            style="@style/style_rb_left"
+            android:drawableLeft="@drawable/selector_left_list"
+            android:text="列表" />
+
+        <RadioButton
+            android:id="@+id/rb_setting"
+            style="@style/style_rb_left"
+            android:drawableLeft="@drawable/selector_left_setting"
+            android:text="设置" />
+
+        <RadioButton
+            android:id="@+id/rb_about"
+            style="@style/style_rb_left"
+            android:drawableLeft="@drawable/selector_left_about"
+            android:text="关于" />
+    </RadioGroup>
+
+    <!--尾部-->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+    </FrameLayout>
+</LinearLayout>

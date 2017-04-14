@@ -1,9 +1,12 @@
 package com.sszyc8.universalplayer.utils;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -12,6 +15,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,13 +31,8 @@ import java.util.Locale;
  */
 public class Utils {
 
-    private StringBuilder mFormatBuilder;
-    private Formatter mFormatter;
 
     public Utils() {
-        //  转换成字符串时间
-        mFormatBuilder = new StringBuilder();
-        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
     }
 
     /**
@@ -42,7 +41,12 @@ public class Utils {
      * @param time
      * @return
      */
-    public String stringForTime(int time) {
+    public static String stringForTime(int time) {
+        //  转换成字符串时间
+        StringBuilder mFormatBuilder = new StringBuilder();
+        Formatter mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+
+
         int totalSeconds = time / 1000;
         int secondes = totalSeconds % 60;
 
@@ -106,5 +110,34 @@ public class Utils {
         in.close();
         out.close();
         return result;
+    }
+
+
+    /**
+     * 得到一个自定义大小的list集合
+     *
+     * @param list 集合
+     * @param size 大小
+     * @return
+     */
+    public static List getCustomSizeList(List list, int size) {
+        for (int i = 1; i <= size; i++) {
+            list.add(i);
+        }
+        return list;
+    }
+
+
+    /**
+     * scaleAnim
+     */
+    public static void playAnimScale(View view) {
+        //  属性动画
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 2f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 2f, 1f);
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(scaleX).with(scaleY);
+        animSet.setDuration(500);
+        animSet.start();
     }
 }

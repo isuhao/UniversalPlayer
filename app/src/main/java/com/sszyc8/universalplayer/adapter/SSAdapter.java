@@ -21,7 +21,7 @@ public abstract class SSAdapter<T> extends BaseAdapter {
     private List<T> list;
     private Context context;
 
-    public SSAdapter(List<T> list, Context context) {
+    public SSAdapter(Context context, List<T> list) {
         this.list = list;
         this.context = context;
     }
@@ -39,5 +39,13 @@ public abstract class SSAdapter<T> extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
     }
 }

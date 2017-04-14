@@ -36,5 +36,7 @@ dependencies {
     compile 'org.xutils:xutils:3.0'
     compile 'com.belerweb:pinyin4j:2.5.0'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'me.xiaopan:switchbutton:1.2.0'
+
     compile project(':vitamio')
 }

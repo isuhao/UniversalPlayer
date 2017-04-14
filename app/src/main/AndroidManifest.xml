@@ -15,6 +15,7 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -77,6 +78,9 @@
             android:name=".activity.VitamioPlayActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:screenOrientation="landscape" />
+
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.PassWordActivity" />
     </application>
 
 </manifest>

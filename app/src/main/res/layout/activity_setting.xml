@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sszyc8.universalplayer.ui.DragLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/set_dl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTitle">
+    <!--android:background="@drawable/bg">-->
+    <!--由主面板和左侧面板组成-->
+
+    <!--拖动主面板后看到的左侧页面-->
+    <include layout="@layout/view_left_menu" />
+
+    <!--主面板-->
+    <com.sszyc8.universalplayer.view.MyRelativeLayout
+        android:id="@+id/mll_set"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffff">
+        <!--标题栏目-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorTitle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="设置中心"
+                android:textColor="#ffff"
+                android:textSize="21dp" />
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:src="@drawable/back" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="50dp">
+
+            <!-- android 采用ScrollView布局时出现异常：ScrollView can host only one directchild。
+                主要是ScrollView内部只能有一个子元素，即不能并列两个子元素，所以需要把所有的子元素放到一个LinearLayout内部或RelativeLayout等其他布局方式。-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--设置模块-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="设 置"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+                    <!--分割线-->
+                    <TextView style="@style/style_dotted_line" />
+
+                    <me.xiaopan.switchbutton.SwitchButton
+                        android:id="@+id/switch_update"
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_header"
+                        android:checked="true"
+                        android:text="自动检查更新"
+                        app:frameDrawable="@drawable/switch_frame"
+                        app:sliderDrawable="@drawable/selector_switch_slider"
+                        app:stateDrawable="@drawable/selector_switch_state"
+                        app:stateMaskDrawable="@drawable/switch_state_mask"
+                        app:withTextInterval="5dp" />
+
+                    <me.xiaopan.switchbutton.SwitchButton
+                        android:id="@+id/switch_privacy"
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_center"
+                        android:text="是否启用隐私模式"
+                        app:frameDrawable="@drawable/switch_frame"
+                        app:sliderDrawable="@drawable/selector_switch_slider"
+                        app:stateDrawable="@drawable/selector_switch_state"
+                        app:stateMaskDrawable="@drawable/switch_state_mask"
+                        app:withTextInterval="5dp" />
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_center"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/tv_sdjcbbgx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="手动检查版本更新"
+                            android:textColor="@android:color/black" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_32" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/switch_main_2"
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_footer"
+                        android:text="清除缓存文件" />
+                </LinearLayout>
+
+                <!--互动模块-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="互 动"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+                    <!--分割线-->
+                    <TextView style="@style/style_dotted_line" />
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_header"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/tv_tjhy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="推荐给好友"
+                            android:textColor="@android:color/black" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_32" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_center"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/tv_gwghp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="给我个好评"
+                            android:textColor="@android:color/black" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_32" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_footer"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/tv_yjfk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="意见反馈"
+                            android:textColor="@android:color/black" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_32" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!--关于我们模块-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="关于我们"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <!--分割线-->
+                    <TextView style="@style/style_dotted_line" />
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_header">
+
+                        <TextView
+                            android:id="@+id/tv_zs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="给个赞赏吧"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_zs"
+                            android:layout_marginTop="5dp"
+                            android:text="支付宝账号：29541443@qq.com"
+                            android:textColor="#808080"
+                            android:textSize="24px" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        style="@style/item"
+                        android:background="@drawable/selector_preference_footer">
+
+                        <TextView
+                            android:id="@+id/tv_lx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="联系我们"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_lx"
+                            android:layout_marginTop="5dp"
+                            android:text="邮箱：29541443@qq.com"
+                            android:textColor="#808080"
+                            android:textSize="24px" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </com.sszyc8.universalplayer.view.MyRelativeLayout>
+</com.sszyc8.universalplayer.ui.DragLayout>
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="vertical">--><!-- --><!--</LinearLayout>-->

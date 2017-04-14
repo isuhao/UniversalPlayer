@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,13 +14,18 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.nineoldandroids.view.ViewHelper;
 import com.sszyc8.universalplayer.R;
 import com.sszyc8.universalplayer.adapter.SSAdapter;
 import com.sszyc8.universalplayer.bean.VideoBean;
@@ -40,13 +47,12 @@ public class VideoListActivity extends Activity {
 
     private TextView tvNotVideo;
     private ListView lvVideo;
+    private ImageButton xml_btn_menu;
     private List<VideoBean> videoList; //  视屏数据集合
     private QuickIndexBar mQuickIndexBar;
     private TextView tvDialogCenter;
-    private ListView lvLeft;    //  左侧页面中的列表
-    private String[] leftStrs = {"列表", "设置", "关于"};
-
-    private Utils utils;
+    private RadioButton xml_rb_list;
+    private RadioButton xml_rb_setting;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -57,7 +63,7 @@ public class VideoListActivity extends Activity {
             } else {
                 fillAndSortDate(videoList);
 
-                lvVideo.setAdapter(new SSAdapter<VideoBean>(videoList, VideoListActivity.this) {
+                lvVideo.setAdapter(new SSAdapter<VideoBean>(VideoListActivity.this, videoList) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         ViewHolder holder = null;
@@ -98,7 +104,7 @@ public class VideoListActivity extends Activity {
                         holder.tvIndex.setText(str);
 
                         holder.tvVideoNname.setText(video.getTitle());
-                        holder.tvVideoDuration.setText(utils.stringForTime(Integer.parseInt(video.getDuration())));
+                        holder.tvVideoDuration.setText(Utils.stringForTime(Integer.parseInt(video.getDuration())));
                         holder.tvVideoSize.setText(Formatter.formatFileSize(VideoListActivity.this, video.getSize()));
                         return convertView;
                     }
@@ -113,17 +119,17 @@ public class VideoListActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_video_list);
-        utils = new Utils();
 
-        initVideoListView();
-        initVideoListDate();
+        initView();
+        initDate();
+        initListener();
     }
 
 
     /**
      * 加载视图
      */
-    private void initVideoListView() {
+    private void initView() {
         mDragLayout = (DragLayout) findViewById(R.id.dl);
         myRelativeLayout = (MyRelativeLayout) findViewById(R.id.mll);
 
@@ -131,80 +137,22 @@ public class VideoListActivity extends Activity {
         lvVideo = (ListView) findViewById(R.id.lv_video);
         mQuickIndexBar = (QuickIndexBar) findViewById(R.id.qib);
         tvDialogCenter = (TextView) findViewById(R.id.tv_dialog_center);
-        lvLeft = (ListView) findViewById(R.id.lv_left);
+        xml_btn_menu = (ImageButton) findViewById(R.id.btn_menu);
 
+        xml_rb_list = (RadioButton) findViewById(R.id.rb_list);
+        xml_rb_setting = (RadioButton) findViewById(R.id.rb_setting);
 
-        //  设置点击
-        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //  将视屏列表携带过去
-                Intent intent = new Intent(VideoListActivity.this, VideoPlayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("videoList", (Serializable) videoList);
-                intent.putExtras(bundle);
-                //  将视频在列表中的位置携带过去
-                intent.putExtra("position", position);
-                startActivity(intent);
-            }
-        });
-
-        //  接口监听
-        mQuickIndexBar.setListener(new OnLetterUpdateListenerService() {
-            /**
-             * 更新字母
-             * @param letter 字母
-             */
-            @Override
-            public void onLetterUpdate(String letter) {
-                //  显示屏幕中间字母提示框
-                showLetter(letter);
-                //  根据字母定位listView
-                for (int i = 0; i < videoList.size(); i++) {
-                    VideoBean nameBean = videoList.get(i);
-                    //  获得第一个字母
-                    String l = nameBean.getPinyin().charAt(0) + "";
-                    if (TextUtils.equals(letter, l)) {
-                        //  根据右侧索引条跳转到listView跳到相应的条目
-                        lvVideo.setSelection(i);
-                        break;
-                    }
-                }
-            }
-        });
+        //  初始化左侧设置rb为选中状态
+        xml_rb_list.setChecked(true);
 
         //  设置引用
         myRelativeLayout.setDragLayout(mDragLayout);
-        //  设置监听
-        mDragLayout.setDragStatusListener(new DragLayout.OnDragStatusChangeListener() {
-            @Override
-            public void onOpen() {
-//                Utils.showToast(VideoListActivity.this, "onOpen");
-            }
-
-            @Override
-            public void onClose() {
-//                Utils.showToast(VideoListActivity.this, "onClose");
-
-                //  设置主页面头像抖动
-//                ObjectAnimator animator = ObjectAnimator.ofFloat(ivIcon, "translationX", 15.0f);
-//                animator.setInterpolator(new CycleInterpolator(4));
-//                animator.setDuration(500);
-//                animator.start();
-            }
-
-            @Override
-            public void onDraging(float percent) {
-                //  设置主页面头像透明度
-//                ViewHelper.setAlpha(ivIcon, 1 - percent);
-            }
-        });
     }
 
     /**
      * 加载数据
      */
-    private void initVideoListDate() {
+    private void initDate() {
         //  用于装载视屏
         videoList = new ArrayList<>();
 
@@ -238,15 +186,103 @@ public class VideoListActivity extends Activity {
                 }
             }
         }.start();
+    }
 
+    /**
+     * 初始化监听
+     */
+    private void initListener() {
 
-        lvLeft.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, leftStrs) {
+        //  设置点击
+        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView mText = (TextView) view;
-                mText.setTextColor(Color.WHITE);
-                return view;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //  将视屏列表携带过去
+                Intent intent = new Intent(VideoListActivity.this, VideoPlayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("videoList", (Serializable) videoList);
+                intent.putExtras(bundle);
+                //  将视频在列表中的位置携带过去
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
+
+        lvVideo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mQuickIndexBar.setVisibility(View.GONE);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    mQuickIndexBar.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
+        //  接口监听
+        mQuickIndexBar.setListener(new OnLetterUpdateListenerService() {
+            /**
+             * 更新字母
+             * @param letter 字母
+             */
+            @Override
+            public void onLetterUpdate(String letter) {
+                //  显示屏幕中间字母提示框
+                showLetter(letter);
+                //  根据字母定位listView
+                for (int i = 0; i < videoList.size(); i++) {
+                    VideoBean nameBean = videoList.get(i);
+                    //  获得第一个字母
+                    String l = nameBean.getPinyin().charAt(0) + "";
+                    if (TextUtils.equals(letter, l)) {
+                        //  根据右侧索引条跳转到listView跳到相应的条目
+                        lvVideo.setSelection(i);
+                        break;
+                    }
+                }
+            }
+        });
+
+        //  设置监听
+        mDragLayout.setDragStatusListener(new DragLayout.OnDragStatusChangeListener() {
+            @Override
+            public void onOpen() {
+//                Utils.showToast(VideoListActivity.this, "onOpen");
+            }
+
+            @Override
+            public void onClose() {
+//                Utils.showToast(VideoListActivity.this, "onClose");
+
+                //  设置主页面头像抖动
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(ivIcon, "translationX", 15.0f);
+//                animator.setInterpolator(new CycleInterpolator(4));
+//                animator.setDuration(500);
+//                animator.start();
+            }
+
+            @Override
+            public void onDraging(float percent) {
+                //  设置主页面菜单隐藏
+                ViewHelper.setAlpha(xml_btn_menu, 1 - percent);
+            }
+        });
+
+        //  设置菜单按钮监听
+        xml_btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDragLayout != null)
+                    mDragLayout.open(true);
+            }
+        });
+
+        xml_rb_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(VideoListActivity.this, SettingActivity.class));
             }
         });
     }
@@ -291,4 +327,13 @@ public class VideoListActivity extends Activity {
         TextView tvVideoSize;
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        super.onBackPressed();
+    }
 }

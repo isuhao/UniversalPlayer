@@ -10,9 +10,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nineoldandroids.view.ViewHelper;
+import com.sszyc8.universalplayer.R;
+import com.sszyc8.universalplayer.utils.Utils;
 
 /**
  * 侧滑面板
@@ -160,6 +163,7 @@ public class DragLayout extends FrameLayout {
                 super.onViewDragStateChanged(state);
             }
         });
+
     }
 
     /**
@@ -218,8 +222,8 @@ public class DragLayout extends FrameLayout {
      */
     private void animViews(float percent) {
 
-        ViewHelper.setScaleX(mLeftContent, 0.5f * percent + 0.5f);
-        ViewHelper.setScaleY(mLeftContent, 0.5f * percent + 0.5f);
+//        ViewHelper.setScaleX(mLeftContent, 0.5f * percent + 0.5f);
+//        ViewHelper.setScaleY(mLeftContent, 0.5f * percent + 0.5f);
 
         //  平移动画
         ViewHelper.setTranslationX(mLeftContent, evaluate(percent, -mMeasuredWidth / 2.0f, 0));
@@ -228,8 +232,8 @@ public class DragLayout extends FrameLayout {
         ViewHelper.setAlpha(mLeftContent, evaluate(percent, 0.5f, 1.0f));
 
         //  主面板缩放
-        ViewHelper.setScaleX(mMainContent, evaluate(percent, 1.0f, 0.8f));
-        ViewHelper.setScaleY(mMainContent, evaluate(percent, 1.0f, 0.8f));
+//        ViewHelper.setScaleX(mMainContent, evaluate(percent, 1.0f, 0.9f));
+//        ViewHelper.setScaleY(mMainContent, evaluate(percent, 1.0f, 0.9f));
 
         //  设置背景动画(黑色到透明)
         getBackground().setColorFilter((int) evaluateColor(percent, Color.BLACK, Color.TRANSPARENT), PorterDuff.Mode.SRC_OVER);
@@ -309,7 +313,7 @@ public class DragLayout extends FrameLayout {
      *
      * @param isSmooth 是否开启平滑动画
      */
-    private void open(boolean isSmooth) {
+    public void open(boolean isSmooth) {
         int l = mRange;
         if (isSmooth) {
             boolean isMoveOk = mDragHelper.smoothSlideViewTo(mMainContent, l, 0);
@@ -383,6 +387,7 @@ public class DragLayout extends FrameLayout {
         //  获得到第一个
         mLeftContent = (ViewGroup) getChildAt(0);
         mMainContent = (ViewGroup) getChildAt(1);
+
     }
 
     //  尺寸改变后
@@ -394,6 +399,6 @@ public class DragLayout extends FrameLayout {
         mMeasuredWidth = getMeasuredWidth();
         mMeasuredHeight = getMeasuredHeight();
 
-        mRange = (int) (mMeasuredWidth * 0.6f);
+        mRange = (int) (mMeasuredWidth * 0.4f);
     }
 }
